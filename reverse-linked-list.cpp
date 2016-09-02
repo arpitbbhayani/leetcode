@@ -33,13 +33,52 @@ int readline(char *str) {
     return i;
 }
 
-int main(int argc, char *argv[]) {
-    int t;
-    scanf("%d", &t);
+struct node {
+    int val;
+    struct node * next;
+};
 
-    while(t--) {
+struct node * new_node(int d) {
+    struct node * t = (struct node *) calloc(1, sizeof(struct node));
+    t->val = d;
+    return t;
+}
 
+void printList(struct node * head) {
+    struct node * p = head;
+    while(p) {
+        printf("%d ", p->val);
+        p = p->next;
     }
+    printf("\n");
+}
+
+struct node * reverse_list(struct node * head) {
+    struct node * p = head;
+    struct node * q = NULL;
+    struct node * r = NULL;
+
+    while(p) {
+        r = p->next;
+        p->next = q;
+        q = p;
+        p = r;
+    }
+
+    return q;
+}
+
+int main(int argc, char *argv[]) {
+    struct node * head = new_node(2);
+    head->next = new_node(1);
+    head->next->next = new_node(2);
+    head->next->next->next = new_node(4);
+    head->next->next->next->next = new_node(5);
+    head->next->next->next->next->next = new_node(6);
+
+    printList(head);
+    head = reverse_list(head);
+    printList(head);
 
     return 0;
 }
